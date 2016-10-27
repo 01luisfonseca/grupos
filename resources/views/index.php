@@ -16,13 +16,13 @@
         <script src='/js/node_modules/angular/angular.min.js'></script>
         <script src="/js/node_modules/angular-cookies/angular-cookies.min.js"></script>
         <script src="/js/node_modules/query-string/query-string.js"></script>
-        <script src="/js/node_modules/angular-oauth2/dist/angular-oauth2.min.js"></script>
         <script src='/js/node_modules/angular-animate/angular-animate.min.js'></script>
         <script src='/js/node_modules/angular-middleware/dist/angular-middleware.min.js'></script>
         <script src='/js/node_modules/angular-sanitize/angular-sanitize.min.js'></script>
         <script src='/js/node_modules/angular-ui-router/release/angular-ui-router.min.js'></script>
         <script src='/js/node_modules/jquery/dist/jquery.min.js'></script>
         <script src='/js/node_modules/bootstrap/dist/js/bootstrap.min.js'></script>
+        <script src='/js/node_modules/ngstorage/ngStorage.min.js'></script>
         
         
         <!-- Frontend -->
@@ -31,7 +31,10 @@
         <script src='/js/index.core.js'></script>
         <script src='/js/index.router.js'></script>
         <script src='/js/index.presentacion.js'></script>
+        <script src='/js/app.services/oauth.value.js'></script>
+        <script src='/js/app.services/auth.factory.js'></script>
 
+        <!-- Modulos -->
         <script src='/js/layout/menu.directive.js'></script>
         <script src='/js/login/login.controller.js'></script>
         

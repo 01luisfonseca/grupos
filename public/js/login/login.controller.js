@@ -4,7 +4,7 @@
 		.module('escuela')
 		.controller('loginCtrl',controller);
 
-		function controller(OAuth){
+		function controller($location, AuthenticationFactory){
 			var vm=this;
 			vm.login={
 				username:'',
@@ -13,17 +13,29 @@
 				// Funciones
 			vm.loginUser=loginUser;
 			vm.logoutUser=logoutUser;
+
+			// Lanzamiento automático
+			vm.logoutUser();
 			
 			///////////////
 			function loginUser(){
-				console.log(vm.login);
-				OAuth.getAccessToken(vm.login); // Arreglar la validacion y el acceso a las rutas despues del login
-				console.log(OAuth.isAuthenticated());
+				console.log('Iniciando sesión...');
+				vm.loading=true;
+				AuthenticationFactory.Login(vm.login, respuesta);
+			}
+
+			function respuesta(result){
+                if (result === true) {
+                    $location.path('/authhome');
+                } else {
+                    vm.error = 'Usuario o contraseña incorrectos';
+                    vm.loading = false;
+                }
 			}
 
 			function logoutUser(){
 				console.log('Sesión cerrada.');
-				OAuth.revokeToken();
+				AuthenticationFactory.Logout();
 			}
 		}
 })();

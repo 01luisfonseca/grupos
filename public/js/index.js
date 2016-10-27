@@ -5,30 +5,21 @@
 			// Compartidos
 			'escuela.config',
 			'escuela.core',
-			'angular-oauth2',
 			'ui.router',
-            'ui.router.middleware',
+      'ui.router.middleware',
+      'ngStorage',
 
 			// De aplicacion
 			'escuela.router',
 			'escuela.presentacion',
 		])
+		.config(config)
+		.run(run);
 
-		.config([
-			'OAuthProvider', // Arreglar la validacion y el acceso a las rutas despues del login
-			'$stateProvider', 
-			'$urlRouterProvider', 
-			'$middlewareProvider', 
-		function(OAuthProvider,$stateProvider, $urlRouterProvider, $middlewareProvider) {
-			OAuthProvider.configure({
-      			baseUrl: '/',
-      			clientId: '2',
-      			clientSecret: 'c5xrJb6hZv1gco95BQAoavOXqO4V9QoYbpWCIB7w',
-      			grantPath: '/oauth/token',
-  				revokePath: '/oauth/revoke'
-    		});
+    ////////////////
+    function config($stateProvider, $urlRouterProvider, $middlewareProvider){
 
-    		$middlewareProvider.map({
+        $middlewareProvider.map({
             'nobody':[function nobodyMiddleware(){
                             // Bloqueado
                     }],
@@ -49,11 +40,11 @@
                                 this.next();
                             //}
                     }],
-        	});
+          });
 
-	        $urlRouterProvider.otherwise("/login");
+          $urlRouterProvider.otherwise("/");
 
-    	    $stateProvider
+          $stateProvider
             .state('login', {
                 url: "/login",
                 templateUrl: "/js/login/login.html",
@@ -65,22 +56,21 @@
                 templateUrl: "/js/authhome/authhome.html",
                 middleware: 'autorizado'
             });
-			}])
+    }
 
-		.run(['$rootScope', '$window', 'OAuth', function($rootScope, $window, OAuth) {
-    		$rootScope.$on('oauth:error', function(event, rejection) {
-      		// Ignore `invalid_grant` error - should be catched on `LoginController`.
-      		if ('invalid_grant' === rejection.data.error) {
-        		return;
-      		}
+    function run($rootScope, $http, $location, $localStorage) {
+        // keep user logged in after page refresh
+        if ($localStorage.currentUser) {
+            $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.access_token;
+        }
 
-      		// Refresh token when a `invalid_token` error occurs.
-      		if ('invalid_token' === rejection.data.error) {
-        		return OAuth.getRefreshToken();
-      		}
-
-      		// Redirect to `/login` with the `error_reason`.
-      		return $window.location.href = '/login?error_reason=' + rejection.data.error;
-    	});
-  	}]);
+        // redirect to login page if not logged in and trying to access a restricted page
+        $rootScope.$on('$locationChangeStart', function (event, next, current) {
+            var publicPages = ['/login'];
+            var restrictedPage = publicPages.indexOf($location.path()) === -1;
+            if (restrictedPage && !$localStorage.currentUser) {
+                $location.path('/login');
+            }
+        });
+    }
 })();
