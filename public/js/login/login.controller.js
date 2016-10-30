@@ -4,7 +4,7 @@
 		.module('escuela')
 		.controller('loginCtrl',controller);
 
-		function controller($location, AuthenticationFactory){
+		function controller($location, $localStorage, AuthenticationFactory){
 			var vm=this;
 			vm.login={
 				username:'',
@@ -25,6 +25,7 @@
 			}
 
 			function respuesta(result){
+				console.log(typeof($localStorage.currentUser));
                 if (result === true) {
                     $location.path('/authhome');
                 } else {
@@ -36,6 +37,7 @@
 			function logoutUser(){
 				console.log('Sesión cerrada.');
 				AuthenticationFactory.Logout();
+				console.log(typeof($localStorage.currentUser));
 			}
 		}
 })();

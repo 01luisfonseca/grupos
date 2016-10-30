@@ -7,7 +7,7 @@
 (function(){
 	'use strict';
 	angular
-		.module('escuela.presentacion')
+		.module('escuela')
 		.directive('menuDir',directive);
 	function directive(){
 		var directive = {
@@ -22,8 +22,19 @@
     	function link(scope, element, attrs) {
       	/* */
     	}
-    	function controller($http){
+    	function controller($http,$localStorage){
     		var vm=this;
+
+            // Functiones
+            vm.existeStorage=existeStorage;
+
+            /////////////
+            function existeStorage(){
+                if(typeof($localStorage.currentUser)=='object'){
+                    return true;
+                }
+                return false;
+            }
     	}
 	}
 })();

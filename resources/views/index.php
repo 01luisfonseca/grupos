@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/ico" href="/favicon.ico">
 
         <title>Escuela</title>
 
@@ -41,8 +42,9 @@
     </head>
     <body ng-app="escuela">
         <div class="container-fluid">
+            <div menu-dir></div>
             <div class="row">
-                <div class="col-md-10 col-md-offset-1" ui-view></div>
+                <div ui-view></div>
             </div>
         </div>
     </body>

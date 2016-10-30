@@ -42,7 +42,7 @@
                     }],
           });
 
-          $urlRouterProvider.otherwise("/");
+          $urlRouterProvider.otherwise("/authhome");
 
           $stateProvider
             .state('login', {
