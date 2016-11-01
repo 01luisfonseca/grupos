@@ -22,11 +22,18 @@
     	function link(scope, element, attrs) {
       	/* */
     	}
-    	function controller($http,$localStorage){
+    	function controller($http,$localStorage,perfil,$interval){
     		var vm=this;
+
+            // Variables
+            vm.usuario={};
 
             // Functiones
             vm.existeStorage=existeStorage;
+            vm.nombreUser=nombreUser;
+
+            // Automaticas
+            $interval(perfil.buscarInfo,5000,10);
 
             /////////////
             function existeStorage(){
@@ -34,6 +41,9 @@
                     return true;
                 }
                 return false;
+            }
+            function nombreUser(){
+                return perfil.getInfo().name;
             }
     	}
 	}

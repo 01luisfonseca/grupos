@@ -3,22 +3,38 @@
 	angular
 		.module('escuela')
 		.controller('usuariosCtrl',controller);
-	function controller(animPage){
+	function controller(animPage, UsersFactory){
 		var vm=this;
 
 		// Variables
 		vm.buscado="";
 		vm.users={};
+		vm.panel=1;
 
 		// Funciones
 		vm.buscarTexto=buscarTexto;
 		vm.hayUsuarios=hayUsuarios;
+		vm.selecPanel=selecPanel;
+		vm.panelEleg=panelEleg;
 
 		// Lanzamiento Automático
 		animPage.show('usuarios',function(){});
 
 		///////////////////////////
-		function buscarTexto(){}
+		function buscarTexto(){
+			if(vm.buscado.length>2){
+				return getSearchUsers.then(function(){
+					console.log(vm.users);
+				});
+			}
+			return false;
+		}
+		function getSearchUsers(){
+			return UsersFactory.getSearchUsers(vm.buscado).then(function(res){
+				vm.users=res;
+				return vm.users;
+			});
+		}
 
 		function hayUsuarios(){
 			if (typeof(vm.users.data)=='object' || typeof(vm.users.data)=='array') {
@@ -26,6 +42,18 @@
 			}else{
 				return false;
 			}
+		}
+
+		function selecPanel(id){
+			vm.panel=id;
+			//console.log(id);
+		}
+
+		function panelEleg(id){
+			if (vm.panel==id) {
+				return true;
+			}
+			return false;
 		}
 	}
 })();

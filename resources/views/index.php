@@ -36,12 +36,15 @@
         <script src='/js/app.services/oauth.value.js'></script>
         <script src='/js/app.services/auth.factory.js'></script>
         <script src='/js/app.services/animPages.service.js'></script>
+        <script src='/js/app.services/perfil.service.js'></script>
+        <script src='/js/app.services/users.factory.js'></script>
 
         <!-- Modulos -->
         <script src='/js/layout/menu.directive.js'></script>
         <script src='/js/login/login.controller.js'></script>
         <script src='/js/authhome/authhome.controller.js'></script>
         <script src='/js/usuarios/usuarios.controller.js'></script>
+        <script src='/js/usuarios/usuario.directive.js'></script>
         
     </head>
     <body ng-app="escuela">

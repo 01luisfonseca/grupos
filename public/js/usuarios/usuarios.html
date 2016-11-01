@@ -5,7 +5,24 @@
   <div id="content">
     <p>En esta sección podrá crear, modificar o actualizar la información de los usuarios</p>
     <p>En el siguiente campo digite el criterio de búsqueda. Puede ser nombre, apellido, nivel de usuario o tarjeta. Por favor inserte al menos 3 carácteres para la búsqueda.</p>
-    <div class="panel panel-default">
+    
+    <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active" ng-click='vm.selecPanel(1)'><a aria-controls="CrearUsuarios" role="tab" data-toggle="tab">Crear usuarios</a></li>
+    <li role="presentation" ng-click='vm.selecPanel(2)'><a aria-controls="ModificarUsuarios" role="tab" data-toggle="tab">Modificar usuarios</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="active"  id="CrearUsuarios">
+      <div class="panel panel-default" ng-show='vm.panelEleg(1)'>
+        <div class="panel-body"><usuario nuevo='true'></usuario></div>
+      </div>
+    </div>
+
+    <div role="tabpanel" id="ModificarUsuarios">
+
+      <div class="panel panel-default" ng-show='vm.panelEleg(2)'>
       <div class="panel-body">
         <input type="text" ng-model='vm.buscado' placeholder="Introduzca el texto a buscar." ng-change='vm.buscarTexto()' class="form-control input-md">
 
@@ -55,6 +72,9 @@
 </div>
       </div>
     </div>
+
+    </div>
+  </div>
     
   </div>                 
 </div>

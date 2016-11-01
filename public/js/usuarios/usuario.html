@@ -1,43 +1,48 @@
-  <div id="header">
-    <h2>Perfil de usuario</h2>
-  </div>
   <div id="content">
     <form method="POST" action="" class="form">
       <div class="form-group">
         <label class="control-label" for="name">Nombres</label>  
-        <input id="name" name="name" type="text" placeholder="Digite nombres" value="" class="form-control input-md" required>
+        <input id="name" name="name" type="text" placeholder="Digite nombres" class="form-control input-md" required>
       </div>
       <div class="form-group">
         <label class="control-label" for="lastname">Apellidos</label>  
-        <input id="lastname" name="lastname" type="text" placeholder="Digite los apellidos" value="" class="form-control input-md" required>
+        <input id="lastname" name="lastname" type="text" placeholder="Digite los apellidos" class="form-control input-md" required>
       </div>
       <div class="form-group">
         <label class="control-label" for="identificacion">No. Identificacion</label>  
-        <input id="identificacion" name="identificacion" type="number" placeholder="Introduzca su numero de identificación" value="" class="form-control input-md" required>
+        <input id="identificacion" name="identificacion" type="number" placeholder="Introduzca su numero de identificación" class="form-control input-md" required>
       </div>
       <div class="form-group">
         <label class="control-label" for="birday">Fecha de nacimiento</label>  
-        <input id="birday" name="birday" type="date" placeholder="dd/mm/aaaa" value="" class="form-control input-md" required>
+        <input id="birday" name="birday" type="date" placeholder="dd/mm/aaaa" class="form-control input-md" required>
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="tipo_sangre">Tipo de sangre</label>  
+        <input id="tipo_sangre" name="tipo_sangre" type="text" placeholder="Por ejemplo: O+" class="form-control input-md" required>    
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="estado">Habilitado (1) o inhabilitado (0)</label>  
+        <input id="estado" name="estado" type="number" min="0" max="1" class="form-control input-md" required>    
       </div>
       <div class="form-group">
         <label class="control-label" for="email">Correo electrónico</label>  
-        <input id="email" name="email" type="email" placeholder="correo@dominio.com" value="" class="form-control input-md" required>    
+        <input id="email" name="email" type="email" placeholder="correo@dominio.com" class="form-control input-md" required>    
       </div>
       <div class="form-group">
         <label class="control-label" for="telefono">Teléfono</label>  
-        <input id="telefono" name="telefono" type="text" placeholder="xx x xxxxxxx" value="" class="form-control input-md" required>   
+        <input id="telefono" name="telefono" type="text" placeholder="xx x xxxxxxx" class="form-control input-md" required>   
       </div>
       <div class="form-group">
         <label class="control-label" for="direccion">Dirección de residencia</label>  
-        <input id="direccion" name="direccion" type="text" placeholder="CLL 19 Z BIS SUR # 20 A BIS ESTE 30" value="" class="form-control input-md" required>    
+        <input id="direccion" name="direccion" type="text" placeholder="CLL 19 Z BIS SUR # 20 A BIS ESTE 30" class="form-control input-md" required>    
       </div>
       <div class="form-group">
         <label class="control-label" for="acudiente">Nombre de Acudiente</label>  
-        <input id="acudiente" name="acudiente" type="text" placeholder="Nombre de persona a cargo" value="" class="form-control input-md">   
+        <input id="acudiente" name="acudiente" type="text" placeholder="Nombre de persona a cargo" class="form-control input-md">   
       </div>
       <div class="form-group">
       <label class="control-label" for="tarjeta">Tarjeta</label>  
-      <input id="tarjeta" name="tarjeta" type="text" placeholder="Tarjeta de asistencia" value="" class="form-control nput-md">   
+      <input id="tarjeta" name="tarjeta" type="text" placeholder="Tarjeta de asistencia" class="form-control input-md">   
       </div>
       <div class="form-group">
         <label class="control-label" for="tipo_usuario">Tipo de permiso de acceso</label>
@@ -45,5 +50,14 @@
           <option value=""></option>
         </select>
       </div>
+      <div class="form-group">
+      <label class="control-label" for="tarjeta">Contraseña</label>  
+      <input id="tarjeta" name="tarjeta" type="password" placeholder="Ingrese contraseña" class="form-control input-md">   
+      </div>
+      <div class="form-group">
+      <label class="control-label" for="tarjeta">Verificar contraseña</label>  
+      <input id="tarjeta" name="tarjeta" type="password" placeholder="Vuelva a colocar contraseña" class="form-control input-md">   
+      </div>
+      <input type="submit" class="btn btn-primary" value="Guardar">
     </form>
   </div> 
