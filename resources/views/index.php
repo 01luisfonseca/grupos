@@ -24,6 +24,7 @@
         <script src='/js/node_modules/jquery/dist/jquery.min.js'></script>
         <script src='/js/node_modules/bootstrap/dist/js/bootstrap.min.js'></script>
         <script src='/js/node_modules/ngstorage/ngStorage.min.js'></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
         
         
         <!-- Frontend -->
@@ -34,10 +35,13 @@
         <script src='/js/index.presentacion.js'></script>
         <script src='/js/app.services/oauth.value.js'></script>
         <script src='/js/app.services/auth.factory.js'></script>
+        <script src='/js/app.services/animPages.service.js'></script>
 
         <!-- Modulos -->
         <script src='/js/layout/menu.directive.js'></script>
         <script src='/js/login/login.controller.js'></script>
+        <script src='/js/authhome/authhome.controller.js'></script>
+        <script src='/js/usuarios/usuarios.controller.js'></script>
         
     </head>
     <body ng-app="escuela">

@@ -54,6 +54,13 @@
             .state('authhome', {
                 url: "/authhome",
                 templateUrl: "/js/authhome/authhome.html",
+                controller: 'authHomeCtrl as vm',
+                middleware: 'autorizado'
+            })
+            .state('usuarios', {
+                url: "/usuarios",
+                templateUrl: "/js/usuarios/usuarios.html",
+                controller: 'usuariosCtrl as vm',
                 middleware: 'autorizado'
             });
     }
