@@ -40,14 +40,12 @@ class DatabaseSeeder extends Seeder
             'birday'=>'2016/10/10',
             'telefono'=>'5000000',
             'direccion'=>'no definida',
-            'acudiente'=>'N-A',
             'tipo_sangre'=>'N-A',
             'tarjeta'=>'00000000',
             'estado'=>1,
             'tipo_usuario_id'=>'6',
             'email'=>'01luisfonseca@gmail.com',
             'password'=>bcrypt('admin1234'),
-            'api_token'=>str_random(60),
             ]);
         DB::table('generales')->insert([
             'nombre'=>'Organización',
@@ -105,6 +103,14 @@ class DatabaseSeeder extends Seeder
         DB::table('mes')->insert([
             'nombre'=>'Diciembre',
             ]);
+        DB::table('oauth_clients')->insert([
+            'name'=>'LocalApp Password',
+            'secret'=>'I8dVQ8umBnjfkrutVB6suAeHMbjr2nVUGRmNjGOn',
+            'redirect'=>'http://localhost',
+            'personal_access_client'=>0,
+            'password_client'=>100,
+            'revoked'=>0
+        ]);
 
         Model::reguard();
     }

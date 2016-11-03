@@ -33,6 +33,7 @@
             vm.nombreUser=nombreUser;
 
             // Automaticas
+            perfil.buscarInfo();
             $interval(perfil.buscarInfo,5000,10);
 
             /////////////

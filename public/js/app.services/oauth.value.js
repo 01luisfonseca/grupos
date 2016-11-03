@@ -4,8 +4,8 @@
 	.constant('OAUTHINFO',{
 		URLVERIFY:'/oauth/token',
 		URLREFRESH:'/oauth/token',
-		CLIENTID:2,
-		CLIENTSECRET:'c5xrJb6hZv1gco95BQAoavOXqO4V9QoYbpWCIB7w',
+		CLIENTID:3,
+		CLIENTSECRET:'I8dVQ8umBnjfkrutVB6suAeHMbjr2nVUGRmNjGOn',
 		GRANTTYPEREQUEST:'password',
 		GRANTTYPEREFRESH:'refresh_token'
 	});

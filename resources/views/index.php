@@ -12,6 +12,7 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="/js/node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/ng_animation.css">
         
         <!-- Scripts -->
         <script src='/js/node_modules/angular/angular.min.js'></script>
@@ -36,8 +37,10 @@
         <script src='/js/app.services/oauth.value.js'></script>
         <script src='/js/app.services/auth.factory.js'></script>
         <script src='/js/app.services/animPages.service.js'></script>
+        <script src='/js/app.services/animMsj.service.js'></script>
         <script src='/js/app.services/perfil.service.js'></script>
         <script src='/js/app.services/users.factory.js'></script>
+        <script src='/js/app.services/tipo.factory.js'></script>
 
         <!-- Modulos -->
         <script src='/js/layout/menu.directive.js'></script>
@@ -49,9 +52,9 @@
     </head>
     <body ng-app="escuela">
         <div class="container-fluid">
-            <div menu-dir></div>
+            <div ui-view='menu'></div>
             <div class="row">
-                <div ui-view></div>
+                <div ui-view='body'></div>
             </div>
         </div>
     </body>

@@ -3,7 +3,8 @@
 	angular
 		.module('escuela',[
 			// Compartidos
-			'escuela.config',
+			'ngAnimate',
+      'escuela.config',
 			'escuela.core',
 			'ui.router',
       'ui.router.middleware',
@@ -24,21 +25,13 @@
                             // Bloqueado
                     }],
             'everyone':[function everyoneMiddleware(){
-                            this.next();
+                          this.next();
                     }],
             'autorizado':[function autorizadoMiddleware(){
-                            //if(OAuth.isAuthenticated()){
-                                this.next();
-                            /*}else{
-                                this.redirectTo('login');
-                            }*/
+                          this.next();
                     }],
             'redirautenticado':[function redirautenticadoMiddleware(){
-                            /*if(OAuth.isAuthenticated()){
-                                this.redirectTo('login');
-                            }else{*/
-                                this.next();
-                            //}
+                          this.next();
                     }],
           });
 
@@ -47,21 +40,39 @@
           $stateProvider
             .state('login', {
                 url: "/login",
-                templateUrl: "/js/login/login.html",
-                controller: 'loginCtrl as vm',
-                middleware: 'redirautenticado'
+                 middleware: 'redirautenticado',
+                views:{
+                    'body':{
+                        templateUrl: "/js/login/login.html",
+                        controller: 'loginCtrl as vm',
+                    }
+                }               
             })
             .state('authhome', {
                 url: "/authhome",
-                templateUrl: "/js/authhome/authhome.html",
-                controller: 'authHomeCtrl as vm',
-                middleware: 'autorizado'
+                middleware: 'autorizado',
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/authhome/authhome.html",
+                        controller: 'authHomeCtrl as vm',
+                    }
+                }
             })
             .state('usuarios', {
                 url: "/usuarios",
-                templateUrl: "/js/usuarios/usuarios.html",
-                controller: 'usuariosCtrl as vm',
-                middleware: 'autorizado'
+                middleware: 'autorizado',
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/usuarios/usuarios.html",
+                        controller: 'usuariosCtrl as vm',
+                    }
+                }
             });
     }
 

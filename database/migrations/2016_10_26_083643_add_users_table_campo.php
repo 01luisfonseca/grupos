@@ -14,13 +14,11 @@ class AddUsersTableCampo extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('api_token', 60)->unique();
             $table->string('lastname');
             $table->biginteger('identificacion');
             $table->date('birday');
             $table->string('telefono');
             $table->string('direccion');
-            $table->string('acudiente');
             $table->string('tipo_sangre');
             $table->string('tarjeta');
             $table->integer('tipo_usuario_id');

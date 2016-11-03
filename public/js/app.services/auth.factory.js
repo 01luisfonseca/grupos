@@ -22,15 +22,19 @@
                     $localStorage.currentUser = res.data;
 
                     // add jwt token to auth header for all requests made by the $http service
-                    $http.defaults.headers.common.Authorization = 'Bearer ' + res.data.access_token;
+                    $http.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.access_token;
 
                     // execute callback with true to indicate successful login
-                    callback(true);
+                    if (typeof(callback=='function')) {
+                        callback(true);
+                    }
                 
                 } else {
                 
                     // execute callback with false to indicate failed login
-                    callback(false);
+                    if (typeof(callback=='function')) {
+                        callback(false);
+                    }
                 }
 			});
 		}
@@ -62,27 +66,33 @@
                     	$localStorage.currentUser = res.data;
 
                     	// add jwt token to auth header for all requests made by the $http service
-                    	$http.defaults.headers.common.Authorization = 'Bearer ' + res.data.access_token;
+                    	$http.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.access_token;
 
                     	// execute callback with true to indicate successful login
-                    	callback(true);
+                        if (typeof(callback=='function')) {
+                            callback(true);
+                        }
                 
                 	} else {
                 
                     	Logout();
                     	
                     	// execute callback with false to indicate failed login
-                    	callback(false);
+                        if (typeof(callback=='function')) {
+                    	   callback(false);
+                        }
                 	}
         		});
         	}else{
         		Logout();
-        		callback(false);
+                if (typeof(callback==='function')) {
+        		  callback(false);
+                }
         	}
         }
         function rToken(refTok){
 			var data={
-				refresh_token: user.username,
+				refresh_token: refTok,
 				grant_type: OAUTHINFO.GRANTTYPEREFRESH,
 				client_id: OAUTHINFO.CLIENTID,
 				client_secret: OAUTHINFO.CLIENTSECRET

@@ -5,7 +5,7 @@
 
 	function factory($http){
 		var fc={
-            url: '/api/users/',
+            url: '/api/users',
 			getUser: getUser,
 			getUsers: getUsers,
             getSearchUsers:getSearchUsers,
@@ -19,25 +19,25 @@
 
 		/////////////////
         function getUser(id){
-            return $http.get(fc.url+id);
+            return $http.get(fc.url+'/'+id);
         }
         function getUsers(){
             return $http.get(fc.url);
         }
         function getSearchUsers(texto){
-            return $http.get(fc.url+'search/'+texto);
+            return $http.get(fc.url+'/search/'+texto);
         }
         function getRangeUsers(first){
-            return $http.get(fc.url+'range/'+first);
+            return $http.get(fc.url+'/range/'+first);
         }
         function addUser(data){
             return $http.post(fc.url,data);
         }
         function modUser(id,data){
-            return $http.post(fc.url+id,data);
+            return $http.put(fc.url+'/'+id,data);
         }
         function delUser(id){
-            return $http.get(fc.url+id);
+            return $http.delete(fc.url+'/'+id);
         }
 	}
 })();

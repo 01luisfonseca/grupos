@@ -23,7 +23,6 @@ class User extends Authenticatable
         'birday', 
         'telefono', 
         'direccion', 
-        'acudiente', 
         'tipo_sangre', 
         'tipo_usuario_id', 
         'estado', 
@@ -39,7 +38,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'api_token'
+        'password', 'remember_token'
     ];
 
     protected $dates = ['deleted_at'];

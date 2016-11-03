@@ -6,9 +6,20 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\EventlogRegister;
 use App\User;
+use Log;
 
 class UserCtrl extends Controller
 {
+    /**
+     * @var Request
+     */
+    protected $req;
+
+    public function __construct(Request $request)//Dependency injection
+    {
+        $this->req = $request;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,22 +27,21 @@ class UserCtrl extends Controller
      */
     public function index($ini=0)
     {
-        $obj=User::where('id','>',1)->orderBy('updated_at')->skip($ini)->take(50+$ini)->get();
+        $obj=User::where('id','>',1)->with('tipo_usuario')->orderBy('updated_at')->skip($ini)->take(50+$ini)->get();
         $ev=new EventlogRegister;
         $msj='Consulta registros de usuarios.';
-        $ev->registro(0,$msj);
+        $ev->registro(0,$msj,$this->req->user()->id);
         return $obj->toJson();
     }
 
     /**
-     * Muestra numero de registros
+     * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function count(){
-        $obj=User::all();
-        $col=collect(['registros'=>$obj->count()]);
-        return $col->toJson();
+    public function create()
+    {
+        //
     }
 
     /**
@@ -40,59 +50,74 @@ class UserCtrl extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        $this->validate($request,[
+        $ev=new EventlogRegister;
+        return response()->json($this->req->all());
+        $ev->registro(1,'Intento de guardar usuario.',$this->req->user()->id);
+        $this->validate($this->req,[
             'name'=>'required',
             'lastname'=>'required',
             'email'=>'required',
             'password'=>'required',
-            'identificacion'=>'required',
+            'identificacion'=>'required | unique:users',
             'birday'=>'required',
             'telefono'=>'required',
             'direccion'=>'required',
-            'acudiente'=>'required',
             'tipo_sangre'=>'required',
             'tipo_usuario_id'=>'required',
             'estado'=>'required'
         ]);
-        $obj=User::create($request->all());
-        $ev=new EventlogRegister;
+        $obj=User::create($this->req->all());
         $msj='Usuario creado con id '.$obj->id;
-        $ev->registro(1,$msj);
+        $ev->registro(1,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $user
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($user)
     {
-        $obj=User::findOrFail($id);
+        $obj=User::with('tipo_usuario')->findOrFail($user);
         $ev=new EventlogRegister;
-        $msj='Consulta el usuario id='.$id;
-        $ev->registro(0,$msj);
+        $msj='Consulta el usuario id='.$user;
+        $ev->registro(0,$msj,$this->req->user()->user);
         return $obj->toJson();
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($user)
+    {
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($user)
     {
-        $obj=User::findOrFail($id);
-        if($request->has('password')){
-            $obj->password=bcrypt($request->input('password'));
+        dd($this->req);
+        $ev=new EventlogRegister;
+        $ev->registro(1,'Intento de actualizar usuario id='.$user,$this->req->user()->user);
+        $obj=User::findOrFail($user);
+        if($this->req->has('password')){
+            $obj->password=bcrypt($this->req->input('password'));
             $obj->save();
         }else{
-            $this->validate($request,[
+            $this->validate($this->req,[
                 'name'=>'required',
                 'lastname'=>'required',
                 'email'=>'required',
@@ -105,54 +130,72 @@ class UserCtrl extends Controller
                 'tipo_usuario_id'=>'required',
                 'estado'=>'required'
             ]);
-            $obj->name=$request->input('name');
-            $obj->lastname=$request->input('lastname');
-            $obj->email=$request->input('email');
-            $obj->identificacion=$request->input('identificacion');
-            $obj->birday=$request->input('birday');
-            $obj->telefono=$request->input('telefono');
-            $obj->direccion=$request->input('direccion');
-            $obj->acudiente=$request->input('acudiente');
-            $obj->tipo_sangre=$request->input('tipo_sangre');
-            $obj->estado=$request->input('estado');
-            $obj->tipo_usuario_id=$request->input('tipo_usuario_id');
+            $obj->name=$this->req->input('name');
+            $obj->lastname=$this->req->input('lastname');
+            $obj->email=$this->req->input('email');
+            $obj->identificacion=$this->req->input('identificacion');
+            $obj->birday=$this->req->input('birday');
+            $obj->telefono=$this->req->input('telefono');
+            $obj->direccion=$this->req->input('direccion');
+            $obj->acudiente=$this->req->input('acudiente');
+            $obj->tipo_sangre=$this->req->input('tipo_sangre');
+            $obj->estado=$this->req->input('estado');
+            $obj->tipo_usuario_id=$this->req->input('tipo_usuario_id');
             $obj->save();
         }
-        $ev=new EventlogRegister;
-        $msj='Modifica la información del usuario id='.$id;
-        $ev->registro(1,$msj);
+        $msj='Modifica la información del usuario id='.$user;
+        $ev->registro(1,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($user)
     {
-        $obj=User::findOrFail($id);
+        dd($this->req);
+        $ev=new EventlogRegister;
+        $ev->registro(2,'Intento de eliminar usuario. id='.$user,$this->req->user()->id);
+        if ($user==1) {
+            return response()->json(['msj'=>'No se puede eliminar al administrador']);
+        }
+        $obj=User::findOrFail($user);
         $obj->delete();
         $msj='Se ha borrado el registro '.$obj->id;
-        $ev=new EventlogRegister;
-        $ev->registro(2,$msj);
+        $ev->registro(2,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
+    }
+
+    /////////////////////////////////////////////
+    /////////// FUNCIONES ADICIONALES ///////////
+    /////////////////////////////////////////////
+   
+    /**
+     * Muestra numero de registros
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function count(){
+        $obj=User::all();
+        $col=collect(['registros'=>$obj->count()]);
+        return $col->toJson();
     }
 
     /**
      * Busca los objetos que coincidan.
      *
-     * @param  int  $id
+     * @param  int  $info
      * @return \Illuminate\Http\Response
      */
-    public function search($info)
+    public function search($info) // Falta esto
     {
-        $obj=User::findOrFail($id);
-        $obj->delete();
-        $msj='Se ha borrado el registro '.$obj->id;
+        //$obj=User::findOrFail($id);
+        $msj='Se han buscado los registros con letras: '.$info;
         $ev=new EventlogRegister;
-        $ev->registro(2,$msj);
+        $ev->registro(2,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
     }
 }
