@@ -1,7 +1,7 @@
   <div id="content">
     <div id="error" ng-show='vm.error.existe' class="alert alert-warning" role="alert"><p>{{vm.error.msj}}</p></div>
     <div id="alerta" ng-show='vm.alerta.existe' class="alert alert-danger" role="alert"><p>{{vm.alerta.msj}}</p></div>
-    <form class="form" name='formUser' ng-submit='vm.gestionUser()' novalidate>
+    <form class="form" name='formUser' ng-submit='formUser.$valid && vm.validaPass() && vm.gestionUser()' novalidate>
       <div class="form-group">
         <label class="control-label" for="name">Nombres</label>  
         <input id="name" name="name" type="text" placeholder="Digite nombres" class="form-control input-md" required ng-model='vm.user.name'>
@@ -37,7 +37,6 @@
       <div class="form-group">
         <label class="control-label" for="direccion">Dirección de residencia</label>  
         <input id="direccion" name="direccion" type="text" placeholder="CLL 19 Z BIS SUR # 20 A BIS ESTE 30" class="form-control input-md" ng-model='vm.user.direccion' required>    
-      </div>
       </div>
       <div class="form-group">
       <label class="control-label" for="tarjeta">Tarjeta</label>  

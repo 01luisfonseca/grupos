@@ -71,19 +71,21 @@
 			}
 
 			function gestionUser(){
-				console.log(vm.user);
+				//console.log(vm.user);
 				return newUser(vm.user);
 			}
 			function newUser(data){
-				console.log(data);
+				//console.log(data);
 				if (!vm.validaPass()) {
 					console.log('No pasa password.');
 					return false;
 				}
 				return UsersFactory.addUser(data).then(function(res){
 					console.log(res);
+					vm.user={};
+					lanzaAlerta(res.data.msj);
 				},function(res){
-					lanzaError('Falta información para almacenar el usuario');
+					lanzaError('Falta información para almacenar el usuario, o el número de identificación ya existe');
 				});
 			}
 

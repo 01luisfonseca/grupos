@@ -63,7 +63,7 @@
             })
             .state('usuarios', {
                 url: "/usuarios",
-                middleware: 'autorizado',
+                middleware: 'autorizado',   
                 views:{
                     'menu':{
                         template:'<div menu-dir></div>'

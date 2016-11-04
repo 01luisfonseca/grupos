@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\EventlogRegister;
+use Carbon\Carbon;
 use App\User;
 use Log;
 
@@ -53,7 +54,6 @@ class UserCtrl extends Controller
     public function store()
     {
         $ev=new EventlogRegister;
-        return response()->json($this->req->all());
         $ev->registro(1,'Intento de guardar usuario.',$this->req->user()->id);
         $this->validate($this->req,[
             'name'=>'required',
@@ -68,7 +68,23 @@ class UserCtrl extends Controller
             'tipo_usuario_id'=>'required',
             'estado'=>'required'
         ]);
-        $obj=User::create($this->req->all());
+        $date=new Carbon($this->req->input('birday'));
+        $obj=new User;
+        $obj->name=$this->req->input('name');
+        $obj->lastname=$this->req->input('lastname');
+        $obj->email=$this->req->input('email');
+        $obj->identificacion=$this->req->input('identificacion');
+        $obj->birday=$date;
+        $obj->telefono=$this->req->input('telefono');
+        $obj->direccion=$this->req->input('direccion');
+        $obj->tipo_sangre=$this->req->input('tipo_sangre');
+        $obj->estado=$this->req->input('estado');
+        $obj->tarjeta=$this->req->input('tarjeta');
+        $obj->tipo_usuario_id=$this->req->input('tipo_usuario_id');
+        $obj->password=bcrypt($this->req->input('password'));
+        $obj->save();
+
+        //$obj=User::create($this->req->all());
         $msj='Usuario creado con id '.$obj->id;
         $ev->registro(1,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
@@ -109,7 +125,7 @@ class UserCtrl extends Controller
      */
     public function update($user)
     {
-        dd($this->req);
+        return response()->json($this->req->all());
         $ev=new EventlogRegister;
         $ev->registro(1,'Intento de actualizar usuario id='.$user,$this->req->user()->user);
         $obj=User::findOrFail($user);
@@ -125,7 +141,6 @@ class UserCtrl extends Controller
                 'birday'=>'required',
                 'telefono'=>'required',
                 'direccion'=>'required',
-                'acudiente'=>'required',
                 'tipo_sangre'=>'required',
                 'tipo_usuario_id'=>'required',
                 'estado'=>'required'
@@ -135,9 +150,9 @@ class UserCtrl extends Controller
             $obj->email=$this->req->input('email');
             $obj->identificacion=$this->req->input('identificacion');
             $obj->birday=$this->req->input('birday');
+            $obj->tarjeta=$this->req->input('tarjeta');
             $obj->telefono=$this->req->input('telefono');
             $obj->direccion=$this->req->input('direccion');
-            $obj->acudiente=$this->req->input('acudiente');
             $obj->tipo_sangre=$this->req->input('tipo_sangre');
             $obj->estado=$this->req->input('estado');
             $obj->tipo_usuario_id=$this->req->input('tipo_usuario_id');
@@ -156,7 +171,7 @@ class UserCtrl extends Controller
      */
     public function destroy($user)
     {
-        dd($this->req);
+        return response()->json($this->req->all());
         $ev=new EventlogRegister;
         $ev->registro(2,'Intento de eliminar usuario. id='.$user,$this->req->user()->id);
         if ($user==1) {
@@ -192,6 +207,7 @@ class UserCtrl extends Controller
      */
     public function search($info) // Falta esto
     {
+        return response()->json($this->req->all());
         //$obj=User::findOrFail($id);
         $msj='Se han buscado los registros con letras: '.$info;
         $ev=new EventlogRegister;

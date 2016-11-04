@@ -20,15 +20,12 @@ class User extends Authenticatable
         'name', 
         'lastname', 
         'identificacion', 
-        'birday', 
         'telefono', 
         'direccion', 
-        'tipo_sangre', 
         'tipo_usuario_id', 
         'estado', 
         'email', 
-        'password',
-        'tarjeta'
+        'password'
     ];
 
 
