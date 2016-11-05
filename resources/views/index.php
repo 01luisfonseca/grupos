@@ -47,7 +47,9 @@
         <script src='/js/login/login.controller.js'></script>
         <script src='/js/authhome/authhome.controller.js'></script>
         <script src='/js/usuarios/usuarios.controller.js'></script>
+        <script src='/js/usuarios/usuarioInfo.controller.js'></script>
         <script src='/js/usuarios/usuario.directive.js'></script>
+        <script src='/js/usuarios/profile.controller.js'></script>
         
     </head>
     <body ng-app="escuela">

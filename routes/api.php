@@ -17,10 +17,17 @@ Route::group(['middleware' => 'auth:api','namespace'=>'Api'], function () {
 	Route::get('/user', function (Request $request) {
     	return $request->user(); // Info del usuario logueado
 	});
-	Route::resource('users','UserCtrl@store');
 	Route::group(['prefix'=>'users'],function(){
+		//Basicos
+		Route::get('/','UserCtrl@index');
+		Route::post('/','UserCtrl@store');
+		Route::get('/{user}','UserCtrl@show');
+		Route::put('/{user}','UserCtrl@update');
+		Route::delete('/{user}','UserCtrl@destroy');
+		//Adicionales
 		Route::get('/search/{info}','UserCtrl@search');
 		Route::get('/rango/{ini}','UserCtrl@index');
+		Route::put('/status/{user}/{status}','UserCtrl@modEstado');
 	});
 	Route::group(['prefix'=>'tipo'],function(){
 		Route::post('/','TipoCtrl@store');

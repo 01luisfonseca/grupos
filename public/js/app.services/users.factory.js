@@ -12,7 +12,8 @@
             getRangeUsers: getRangeUsers,
             addUser: addUser,
 			modUser: modUser,
-            delUser: delUser
+            delUser: delUser,
+            setEstado: setEstado
 		};
 
 		return fc;
@@ -39,5 +40,9 @@
         function delUser(id){
             return $http.delete(fc.url+'/'+id);
         }
+        function setEstado(id,stat){
+            return $http.put(fc.url+'/status/'+id+'/'+stat);
+        }
+        
 	}
 })();

@@ -23,12 +23,13 @@
       		/* */
     	}
 
-    	function controller(UsersFactory,TipoFactory,animMsj,$timeout){
+    	function controller(UsersFactory,TipoFactory,animMsj,$timeout,perfil){
     		var vm=this;
 
     		// Variables
     		vm.user={};
     		vm.tipo_usuario={};
+    		vm.perfil={};
     		vm.error={
     			existe:false,
     			msj:''
@@ -43,6 +44,7 @@
     		vm.obtenerTipos=obtenerTipos;
     		vm.gestionUser=gestionUser;
     		vm.validaPass=validaPass;
+    		vm.esAdmin=esAdmin;
 
     		// Lanzamiento Automático
 			vm.autoIni();
@@ -50,12 +52,26 @@
 			//////////////////////// 
 			function autoIni(){
 				vm.obtenerTipos();
+				buscarInfo();
 				if (typeof(vm.nuevo)=='undefined') {
 					if (typeof(vm.existente)=='undefined') {
 						console.log('No se hace ninguna acción en el inicio del controlador de Usuario');
 						return false;
+					}else{
+						getInfoUser(vm.existente);
 					}
 				}
+			}
+
+			function buscarInfo(){
+				vm.perfil= perfil.getInfo();
+			}
+
+			function getInfoUser(id){
+				return UsersFactory.getUser(id).then(function(res){
+					vm.user=res.data;
+					vm.user.birday=new Date(vm.user.birday);
+				})
 			}
 
 			function obtenerTipos(){
@@ -71,8 +87,13 @@
 			}
 
 			function gestionUser(){
-				//console.log(vm.user);
-				return newUser(vm.user);
+				if(vm.nuevo){
+					return newUser(vm.user);
+				}
+				if(vm.existente){
+					return actUser(vm.user);
+				}
+				
 			}
 			function newUser(data){
 				//console.log(data);
@@ -81,12 +102,24 @@
 					return false;
 				}
 				return UsersFactory.addUser(data).then(function(res){
-					console.log(res);
+					//console.log(res);
 					vm.user={};
 					lanzaAlerta(res.data.msj);
 				},function(res){
 					lanzaError('Falta información para almacenar el usuario, o el número de identificación ya existe');
 				});
+			}
+
+			function actUser(data){
+				return UsersFactory.modUser(vm.existente,data).then(function(res){
+					lanzaAlerta(res.data.msj);
+				},function(res){
+					lanzaError('Falta información para almacenar el usuario');
+				});
+			}
+
+			function esAdmin(){
+				return perfil.esAdmin();
 			}
 
 			

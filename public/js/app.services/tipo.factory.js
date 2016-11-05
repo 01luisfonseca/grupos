@@ -5,7 +5,7 @@
 
 	function factory($http){
 		var fc={
-            url: '/api/tipo/',
+            url: '/api/tipo',
 			getTipo: getTipo,
 			getTipos: getTipos,
             addTipo: addTipo,
@@ -17,7 +17,7 @@
 
 		/////////////////
         function getTipo(id){
-            return $http.get(fc.url+id);
+            return $http.get(fc.url+'/'+id);
         }
         function getTipos(){
             return $http.get(fc.url);
@@ -26,10 +26,10 @@
             return $http.post(fc.url,data);
         }
         function modTipo(id,data){
-            return $http.post(fc.url+id,data);
+            return $http.post(fc.url+'/'+id,data);
         }
         function delTipo(id){
-            return $http.get(fc.url+id);
+            return $http.get(fc.url+'/'+id);
         }
 	}
 })();

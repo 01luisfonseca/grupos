@@ -73,6 +73,32 @@
                         controller: 'usuariosCtrl as vm',
                     }
                 }
+            })
+            .state('profile', {
+                url: "/profile",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/usuarios/profile.html",
+                        controller: 'profileCtrl as vm',
+                    }
+                }
+            })
+            .state('usuarioinfo', {
+                url: "/usuarios/{id}",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/usuarios/usuarioinfo.html",
+                        controller: 'usuarioInfoCtrl as vm',
+                    }
+                }
             });
     }
 

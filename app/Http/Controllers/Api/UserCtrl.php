@@ -58,7 +58,7 @@ class UserCtrl extends Controller
         $this->validate($this->req,[
             'name'=>'required',
             'lastname'=>'required',
-            'email'=>'required',
+            'email'=>'required | unique:users',
             'password'=>'required',
             'identificacion'=>'required | unique:users',
             'birday'=>'required',
@@ -101,7 +101,7 @@ class UserCtrl extends Controller
         $obj=User::with('tipo_usuario')->findOrFail($user);
         $ev=new EventlogRegister;
         $msj='Consulta el usuario id='.$user;
-        $ev->registro(0,$msj,$this->req->user()->user);
+        $ev->registro(0,$msj,$this->req->user()->id);
         return $obj->toJson();
     }
 
@@ -125,13 +125,11 @@ class UserCtrl extends Controller
      */
     public function update($user)
     {
-        return response()->json($this->req->all());
         $ev=new EventlogRegister;
-        $ev->registro(1,'Intento de actualizar usuario id='.$user,$this->req->user()->user);
+        $ev->registro(1,'Intento de actualizar usuario id='.$user,$this->req->user()->id);
         $obj=User::findOrFail($user);
         if($this->req->has('password')){
             $obj->password=bcrypt($this->req->input('password'));
-            $obj->save();
         }else{
             $this->validate($this->req,[
                 'name'=>'required',
@@ -145,11 +143,12 @@ class UserCtrl extends Controller
                 'tipo_usuario_id'=>'required',
                 'estado'=>'required'
             ]);
+            $date=new Carbon($this->req->input('birday'));
+            $obj->birday=$date;
             $obj->name=$this->req->input('name');
             $obj->lastname=$this->req->input('lastname');
             $obj->email=$this->req->input('email');
             $obj->identificacion=$this->req->input('identificacion');
-            $obj->birday=$this->req->input('birday');
             $obj->tarjeta=$this->req->input('tarjeta');
             $obj->telefono=$this->req->input('telefono');
             $obj->direccion=$this->req->input('direccion');
@@ -195,8 +194,7 @@ class UserCtrl extends Controller
      */
     public function count(){
         $obj=User::all();
-        $col=collect(['registros'=>$obj->count()]);
-        return $col->toJson();
+        return response()->json(['registros'=>$obj->count()]);
     }
 
     /**
@@ -207,10 +205,54 @@ class UserCtrl extends Controller
      */
     public function search($info) // Falta esto
     {
-        return response()->json($this->req->all());
-        //$obj=User::findOrFail($id);
+        $obj=User::with('tipo_usuario')
+            ->select(
+                'users.id',
+                'users.name',
+                'users.lastname',
+                'users.identificacion',
+                'users.updated_at',
+                'users.estado',
+                'users.telefono',
+                'users.email',
+                'users.tarjeta',
+                'tipo_usuario.nombre as tnombre'
+                )
+            ->join('tipo_usuario','tipo_usuario_id','=','tipo_usuario.id')
+            ->where('users.id','!=','1') // El administrador nunca aparece
+            ->where('identificacion','LIKE','%'.$info.'%')
+            ->orWhere('name','LIKE','%'.$info.'%')
+            ->orWhere('lastname','LIKE','%'.$info.'%')
+            ->orWhere('email','LIKE','%'.$info.'%')
+            ->orWhere('telefono','LIKE','%'.$info.'%')
+            ->orWhere('tipo_usuario.nombre','LIKE','%'.$info.'%')
+            ->orWhere('tarjeta','LIKE','%'.$info.'%')
+            ->orderBy('lastname','desc')
+            ->get();
         $msj='Se han buscado los registros con letras: '.$info;
         $ev=new EventlogRegister;
+        $ev->registro(0,$msj,$this->req->user()->id);
+        return $obj->toJson();
+    }
+
+    /**
+     * Actualiza el estado del usuario.
+     *
+     * @param  int  $info
+     * @return \Illuminate\Http\Response
+     */
+    public function modEstado($user,$status){
+        if (!preg_match("/^[[:digit:]]+$/", $status)) {
+            return response()->json(['msj'=>'No es entero']);
+        }
+        $ev=new EventlogRegister;
+        if ($user==1) {
+            return response()->json(['msj'=>'No se puede deshabilitar al administrador']);
+        }
+        $obj=User::findOrFail($user);
+        $obj->estado=$status;
+        $obj->save();
+        $msj='Se ha cambiado el status del usuario id= '.$user.' a estado= '.$status;
         $ev->registro(2,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
     }
