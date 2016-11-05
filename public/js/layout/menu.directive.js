@@ -34,7 +34,7 @@
 
             // Automaticas
             perfil.buscarInfo();
-            $interval(perfil.buscarInfo,5000,10);
+            $interval(perfil.buscarInfo,5000);
 
             /////////////
             function existeStorage(){

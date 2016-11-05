@@ -3,7 +3,7 @@
 	angular
 		.module('escuela')
 		.controller('usuariosCtrl',controller);
-	function controller(animPage, UsersFactory){
+	function controller(animPage, UsersFactory, $timeout){
 		var vm=this;
 
 		// Variables
@@ -23,11 +23,14 @@
 		///////////////////////////
 		function buscarTexto(){
 			if(vm.buscado.length>2){
-				return getSearchUsers.then(function(){
-					console.log(vm.users);
-				});
+				$timeout(buscarUsuario,500);
 			}
 			return false;
+		}
+		function buscarUsuario(){
+			return getSearchUsers.then(function(){
+				console.log(vm.users);
+			});
 		}
 		function getSearchUsers(){
 			return UsersFactory.getSearchUsers(vm.buscado).then(function(res){
