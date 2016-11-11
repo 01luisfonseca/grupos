@@ -41,6 +41,7 @@
         <script src='/js/app.services/perfil.service.js'></script>
         <script src='/js/app.services/users.factory.js'></script>
         <script src='/js/app.services/tipo.factory.js'></script>
+        <script src='/js/app.services/generales.factory.js'></script>
 
         <!-- Modulos -->
         <script src='/js/layout/menu.directive.js'></script>
@@ -50,6 +51,7 @@
         <script src='/js/usuarios/usuarioInfo.controller.js'></script>
         <script src='/js/usuarios/usuario.directive.js'></script>
         <script src='/js/usuarios/profile.controller.js'></script>
+        <script src='/js/generales/generales.controller.js'></script>
         
     </head>
     <body ng-app="escuela">

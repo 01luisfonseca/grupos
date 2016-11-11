@@ -99,6 +99,19 @@
                         controller: 'usuarioInfoCtrl as vm',
                     }
                 }
+            })
+            .state('opciones', {
+                url: "/opciones",
+                middleware: 'autorizado',   
+                views:{
+                    'menu':{
+                        template:'<div menu-dir></div>'
+                    },
+                    'body':{
+                        templateUrl: "/js/generales/generales.html",
+                        controller: 'GenCtrl as vm',
+                    }
+                }
             });
     }
 

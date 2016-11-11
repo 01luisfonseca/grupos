@@ -1,6 +1,8 @@
   <div id="content">
     <div id="error" ng-show='vm.error.existe' class="alert alert-warning" role="alert"><p>{{vm.error.msj}}</p></div>
     <div id="alerta" ng-show='vm.alerta.existe' class="alert alert-danger" role="alert"><p>{{vm.alerta.msj}}</p></div>
+    <p ng-if='vm.esElMismo()'>La información que se presenta a continuación es solo para información. En caso de requerir modificación en la información debe solicitarla al administrador en la institución.</p>
+    <p ng-if='vm.esElMismo()'><strong>NOTA:</strong> Solo se permite la modificación de la contraseña</p>
     <form class="form" name='formUser' ng-submit='formUser.$valid && vm.validaPass() && vm.gestionUser()' novalidate>
       <div class="form-group">
         <label class="control-label" for="name">Nombres</label>  
@@ -42,11 +44,11 @@
       <label class="control-label" for="tarjeta">Tarjeta</label>  
       <input id="tarjeta" name="tarjeta" type="text" placeholder="Tarjeta de asistencia" class="form-control input-md" ng-model='vm.user.tarjeta' >   
       </div>
-      <div ng-if='vm.esAdmin()' class="form-group">
+      <div class="form-group">
         <label class="control-label" for="tipo_usuario">Tipo de permiso de acceso</label>
         <select id="tipo_usuario" name="tipo_usuario" class="form-control" ng-model='vm.user.tipo_usuario_id' >
           <option ng-if='!vm.nuevo' value="{{vm.user.tipo_usuario.id}}" selected>{{vm.user.tipo_usuario.nombre}}</option>
-          <option ng-repeat='tipo in vm.tipo_usuario.data' value="{{tipo.id}}">{{tipo.nombre}}</option>
+          <option ng-if='vm.esAdmin() && !vm.esElMismo()' ng-repeat='tipo in vm.tipo_usuario.data' value="{{tipo.id}}">{{tipo.nombre}}</option>
         </select>
       </div>
       <div class="form-group">

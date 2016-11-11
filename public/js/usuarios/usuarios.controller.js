@@ -43,9 +43,18 @@
 		}
 		function getSUsers(){
 			return UsersFactory.getSearchUsers(vm.buscado).then(function(res){
-				vm.users=res;
+				vm.users=ajustarUsers(res);
 				return vm.users;
 			});
+		}
+		function ajustarUsers(data){
+			for (var i = 0; i < data.data.length; i++) {
+				data.data[i].id=parseInt(data.data[i].id);
+				data.data[i].estado=parseInt(data.data[i].estado);
+				data.data[i].tipo_usuario_id=parseInt(data.data[i].tipo_usuario_id);
+				data.data[i].birday=new Date(data.data[i].birday);
+			}
+			return data;
 		}
 
 		function hayUsuarios(){

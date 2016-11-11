@@ -28,7 +28,7 @@ class UserCtrl extends Controller
      */
     public function index($ini=0)
     {
-        $obj=User::where('id','>',1)->with('tipo_usuario')->orderBy('updated_at')->skip($ini)->take(50+$ini)->get();
+        $obj=User::where('id','>',2)->with('tipo_usuario')->orderBy('updated_at')->skip($ini)->take(50+$ini)->get();
         $ev=new EventlogRegister;
         $msj='Consulta registros de usuarios.';
         $ev->registro(0,$msj,$this->req->user()->id);
@@ -98,7 +98,7 @@ class UserCtrl extends Controller
      */
     public function show($user)
     {
-        $obj=User::with('tipo_usuario')->findOrFail($user);
+        $obj=User::with('tipo_usuario')->where('id','>',2)->findOrFail($user);
         $ev=new EventlogRegister;
         $msj='Consulta el usuario id='.$user;
         $ev->registro(0,$msj,$this->req->user()->id);

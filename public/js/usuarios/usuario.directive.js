@@ -45,6 +45,7 @@
     		vm.gestionUser=gestionUser;
     		vm.validaPass=validaPass;
     		vm.esAdmin=esAdmin;
+    		vm.esElMismo=esElMismo;
 
     		// Lanzamiento Automático
 			vm.autoIni();
@@ -91,6 +92,9 @@
 					return newUser(vm.user);
 				}
 				if(vm.existente){
+					if (vm.existente==vm.perfil.id) {
+						return actPerfil(vm.user);
+					}
 					return actUser(vm.user);
 				}
 				
@@ -115,11 +119,26 @@
 					lanzaAlerta(res.data.msj);
 				},function(res){
 					lanzaError('Falta información para almacenar el usuario');
+				});				
+			}
+
+			function actPerfil(data){
+				return perfil.setInfo(data).then(function(res){
+					lanzaAlerta(res.data.msj);
+				},function(res){
+					lanzaError('Falta información para actualizar el perfil');
 				});
 			}
 
 			function esAdmin(){
 				return perfil.esAdmin();
+			}
+
+			function esElMismo(){
+				if (vm.perfil.id==vm.existente) {
+					return true;
+				}
+				return false;
 			}
 
 			
