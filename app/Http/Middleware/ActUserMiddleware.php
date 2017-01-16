@@ -18,7 +18,7 @@ class ActUserMiddleware
     public function handle($request, Closure $next)
     {
         $user=$request->user();
-        if($user->tipo_usuario_id!=6){
+        if($user->t_users_id!=2){
             $idreq=(int) $request->route()->parameter('user');
             if($idreq==$user->id){
                 return $next($request);

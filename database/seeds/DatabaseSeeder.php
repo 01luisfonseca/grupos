@@ -15,111 +15,33 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         // $this->call(UserTableSeeder::class);
-        DB::table('tipo_usuario')->insert([
-            'nombre'=>'Ninguno',
+        DB::table('t_users')->insert([
+            'name'=>'Ninguno',
             ]);
-        DB::table('tipo_usuario')->insert([
-            'nombre'=>'Alumno',
+        DB::table('t_users')->insert([
+            'name'=>'Superadmin',
             ]);
-        DB::table('tipo_usuario')->insert([
-            'nombre'=>'Trabajador estándar',
+        DB::table('t_users')->insert([
+            'name'=>'Admin',
             ]);
-        DB::table('tipo_usuario')->insert([
-            'nombre'=>'Profesor',
-            ]);
-        DB::table('tipo_usuario')->insert([
-            'nombre'=>'Coordinador',
-            ]);
-        DB::table('tipo_usuario')->insert([
-            'nombre'=>'Administrador',
+        DB::table('t_users')->insert([
+            'name'=>'Estándar',
             ]);
         DB::table('users')->insert([
-            'name'=>'administrador',
-            'lastname'=>'admin',
-            'identificacion'=>'1',
-            'birday'=>'2016/10/10',
-            'telefono'=>'5000000',
-            'direccion'=>'no definida',
-            'tipo_sangre'=>'N-A',
-            'tarjeta'=>'00000000',
-            'estado'=>1,
-            'tipo_usuario_id'=>'6',
+            'name'=>'Luis Fonseca',
+            't_users_id'=>'2',
             'email'=>'01luisfonseca@gmail.com',
+            'status'=>1,
             'password'=>bcrypt('admin1234'),
             ]);
-        DB::table('users')->insert([
-            'name'=>'defPassAdmin',
-            'lastname'=>'defAdmin',
-            'identificacion'=>'2',
-            'birday'=>'2016/10/10',
-            'telefono'=>'5000000',
-            'direccion'=>'no definida',
-            'tipo_sangre'=>'N-A',
-            'tarjeta'=>'00000000',
-            'estado'=>0,
-            'tipo_usuario_id'=>'1',
-            'email'=>'01@gmail.com',
-            'password'=>bcrypt('admin1234'),
-            ]);
-        DB::table('generales')->insert([
-            'nombre'=>'Organización',
-            'valor'=>'',
-            'descripcion'=>'Nombre de la organización de la aplicación.',
+        DB::table('options')->insert([
+            'name'=>'Serial',
+            'value'=>substr(str_shuffle("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 9),
+            'desc'=>'Código serial del dispositivo donde está alojada la aplicación.',
         ]);
-        DB::table('generales')->insert([
-            'nombre'=>'Logo',
-            'valor'=>'',
-            'descripcion'=>'Ruta URL donde se encuentra el logo o escudo .',
-        ]);
-        DB::table('generales')->insert([
-            'nombre'=>'Servidor principal',
-            'valor'=>'',
-            'descripcion'=>'Campo que solo se usa en caso de que esta aplicación dependa de un servidor maestro. Solo se llena en caso de que esta aplicación sea esclava.',
-        ]);
-        DB::table('generales')->insert([
-            'nombre'=>'Serial',
-            'valor'=>substr(str_shuffle("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 9),
-            'descripcion'=>'Código serial del dispositivo donde está alojada la aplicación.',
-        ]);
-        DB::table('mes')->insert([
-            'nombre'=>'Enero',
-            ]);
-        DB::table('mes')->insert([
-            'nombre'=>'Febrero',
-            ]);
-        DB::table('mes')->insert([
-            'nombre'=>'Marzo',
-            ]);
-        DB::table('mes')->insert([
-            'nombre'=>'Abril',
-            ]);
-        DB::table('mes')->insert([
-            'nombre'=>'Mayo',
-            ]);
-        DB::table('mes')->insert([
-            'nombre'=>'Junio',
-            ]);
-        DB::table('mes')->insert([
-            'nombre'=>'Julio',
-            ]);
-        DB::table('mes')->insert([
-            'nombre'=>'Agosto',
-            ]);
-        DB::table('mes')->insert([
-            'nombre'=>'Septiembre',
-            ]);
-        DB::table('mes')->insert([
-            'nombre'=>'Octubre',
-            ]);
-        DB::table('mes')->insert([
-            'nombre'=>'Noviembre',
-            ]);
-        DB::table('mes')->insert([
-            'nombre'=>'Diciembre',
-            ]);
         DB::table('oauth_clients')->insert([
             'name'=>'LocalApp Password',
-            'secret'=>'I8dVQ8umBnjfkrutVB6suAeHMbjr2nVUGRmNjGOn',
+            'secret'=>'I8dVQ8umBnjfXrutVB6maAeHMbjr2nVUGRmNjGOn',
             'redirect'=>'http://localhost',
             'personal_access_client'=>0,
             'password_client'=>100,

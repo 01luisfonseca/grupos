@@ -16,8 +16,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-    ];
+    protected $fillable = [];
 
 
     /**
@@ -33,22 +32,14 @@ class User extends Authenticatable
 
     // Requerido para cambiar el username de passport
     public function findForPassport($username) {
-        return $this->where('identificacion', $username)->where('estado',1)->first();
+        return $this->where('email', $username)->where('status',1)->first();
     }
 
-    public function tipo_usuario(){
-        return $this->belongsTo('App\TipoUsuario');
+    public function t_users(){
+        return $this->belongsTo('App\TUsers');
     }
 
     public function eventlog(){
         return $this->hasMany('App\Eventlog');
-    }
-
-    public function alumnos(){
-        return $this->hasMany('App\Alumnos');
-    }
-
-    public function empleados(){
-        return $this->hasMany('App\Empleados');
     }
 }

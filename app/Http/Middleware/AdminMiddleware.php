@@ -17,7 +17,7 @@ class AdminMiddleware
     public function handle($request, Closure $next)
     {
         $user=$request->user();
-        if($user->tipo_usuario_id==6){
+        if($user->t_users_id==2 || $user->t_users_id==3){
             return $next($request);
         }else{
             $msj='Acción solo de administradores';

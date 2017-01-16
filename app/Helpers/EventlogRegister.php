@@ -14,8 +14,8 @@ class EventlogRegister implements EventlogContract
     	
         $ev=new Eventlog;
     	$ev->users_id=$id;
-    	$ev->nivel=$nivel;
-    	$ev->descripcion=$desc;
+    	$ev->level=$nivel;
+    	$ev->desc=$desc;
     	$ev->save();
     	return true;
 

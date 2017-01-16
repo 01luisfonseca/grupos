@@ -61,11 +61,12 @@ class PerfilCtrl extends Controller
      */
     public function show()
     {
+        //return respose()->json([]);
         $id=$this->req->user()->id;
-        $obj=User::with('tipo_usuario')->findOrFail($id);
-        $ev=new EventlogRegister;
-        $msj='Consulta el perfil id='.$id;
-        $ev->registro(0,$msj,$id);
+        $obj=User::with('t_users')->findOrFail($id);
+        //$ev=new EventlogRegister;
+        //$msj='Consulta el perfil id='.$id;
+        //$ev->registro(0,$msj,$id);
         return $obj->toJson();
     }
 

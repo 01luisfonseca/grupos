@@ -1,18 +1,18 @@
 (function(){
 	'use strict';
 	angular
-		.module('escuela',[
+		.module('app',[
 			// Compartidos
 			'ngAnimate',
-      'escuela.config',
-			'escuela.core',
+      'app.config',
+			'app.core',
 			'ui.router',
       'ui.router.middleware',
       'ngStorage',
 
 			// De aplicacion
-			'escuela.router',
-			'escuela.presentacion',
+			'app.router',
+			'app.presentacion',
 		])
 		.config(config)
 		.run(run);
@@ -61,16 +61,16 @@
                     }
                 }
             })
-            .state('usuarios', {
-                url: "/usuarios",
+            .state('users', {
+                url: "/users",
                 middleware: 'autorizado',   
                 views:{
                     'menu':{
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/usuarios/usuarios.html",
-                        controller: 'usuariosCtrl as vm',
+                        templateUrl: "/js/users/users.html",
+                        controller: 'UsersCtrl as vm',
                     }
                 }
             })
@@ -82,34 +82,34 @@
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/usuarios/profile.html",
+                        templateUrl: "/js/users/profile.html",
                         controller: 'profileCtrl as vm',
                     }
                 }
             })
-            .state('usuarioinfo', {
-                url: "/usuarios/{id}",
+            .state('userinfo', {
+                url: "/users/{id}",
                 middleware: 'autorizado',   
                 views:{
                     'menu':{
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/usuarios/usuarioinfo.html",
-                        controller: 'usuarioInfoCtrl as vm',
+                        templateUrl: "/js/users/userinfo.html",
+                        controller: 'UserInfoCtrl as vm',
                     }
                 }
             })
-            .state('opciones', {
-                url: "/opciones",
+            .state('options', {
+                url: "/options",
                 middleware: 'autorizado',   
                 views:{
                     'menu':{
                         template:'<div menu-dir></div>'
                     },
                     'body':{
-                        templateUrl: "/js/generales/generales.html",
-                        controller: 'GenCtrl as vm',
+                        templateUrl: "/js/options/options.html",
+                        controller: 'OptCtrl as vm',
                     }
                 }
             });

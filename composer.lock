@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "aef0c9b8ba042041f58d0288c44f3333",
+    "hash": "c35656f6726bc86f4c41a787e377f09c",
     "content-hash": "63e54b4515d8ca193582201334a04d1e",
     "packages": [
         {
@@ -857,16 +857,16 @@
         },
         {
             "name": "laravel/passport",
-            "version": "v1.0.9",
+            "version": "v1.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/passport.git",
-                "reference": "e5b96c9da0b2ee8c080a35647e01587fd8c2263b"
+                "reference": "3c957edb0f0894e05db94891a76fde0ab187bcfe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/passport/zipball/e5b96c9da0b2ee8c080a35647e01587fd8c2263b",
-                "reference": "e5b96c9da0b2ee8c080a35647e01587fd8c2263b",
+                "url": "https://api.github.com/repos/laravel/passport/zipball/3c957edb0f0894e05db94891a76fde0ab187bcfe",
+                "reference": "3c957edb0f0894e05db94891a76fde0ab187bcfe",
                 "shasum": ""
             },
             "require": {
@@ -917,20 +917,20 @@
                 "oauth",
                 "passport"
             ],
-            "time": "2016-10-27 19:10:18"
+            "time": "2016-11-11 19:05:06"
         },
         {
             "name": "laravel/scout",
-            "version": "v1.1.8",
+            "version": "v1.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/scout.git",
-                "reference": "31e07d8734d0b0c9d7311d762cef9b9f39840251"
+                "reference": "71ec4eca2c58080d5ed90ff33f545a0d48f51262"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/scout/zipball/31e07d8734d0b0c9d7311d762cef9b9f39840251",
-                "reference": "31e07d8734d0b0c9d7311d762cef9b9f39840251",
+                "url": "https://api.github.com/repos/laravel/scout/zipball/71ec4eca2c58080d5ed90ff33f545a0d48f51262",
+                "reference": "71ec4eca2c58080d5ed90ff33f545a0d48f51262",
                 "shasum": ""
             },
             "require": {
@@ -980,7 +980,7 @@
                 "laravel",
                 "search"
             ],
-            "time": "2016-10-17 21:22:21"
+            "time": "2016-11-09 18:53:27"
         },
         {
             "name": "lcobucci/jwt",
@@ -1471,16 +1471,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.3",
+            "version": "v2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "c0125896dbb151380ab47e96c621741e79623beb"
+                "reference": "a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/c0125896dbb151380ab47e96c621741e79623beb",
-                "reference": "c0125896dbb151380ab47e96c621741e79623beb",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e",
+                "reference": "a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e",
                 "shasum": ""
             },
             "require": {
@@ -1515,7 +1515,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-10-17 15:23:22"
+            "time": "2016-11-07 23:38:38"
         },
         {
             "name": "phpseclib/phpseclib",

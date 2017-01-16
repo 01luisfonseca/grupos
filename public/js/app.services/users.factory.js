@@ -1,6 +1,6 @@
 (function(){
 	'use strict';
-	angular.module('escuela')
+	angular.module('app')
 	.factory('UsersFactory',factory);
 
 	function factory($http){

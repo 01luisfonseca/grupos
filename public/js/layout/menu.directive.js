@@ -7,7 +7,7 @@
 (function(){
 	'use strict';
 	angular
-		.module('escuela')
+		.module('app')
 		.directive('menuDir',directive);
 	function directive(){
 		var directive = {

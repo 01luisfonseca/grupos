@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	angular
-		.module('escuela')
+		.module('app')
 		.controller('loginCtrl',controller);
 
 		function controller($location, $localStorage, AuthenticationFactory,animPage){

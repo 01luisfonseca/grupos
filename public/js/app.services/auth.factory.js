@@ -1,6 +1,6 @@
 (function(){
 	'use strict';
-	angular.module('escuela')
+	angular.module('app')
 	.factory('AuthenticationFactory',factory);
 
 	function factory($http, $localStorage,OAUTHINFO){

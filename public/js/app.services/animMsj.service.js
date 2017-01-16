@@ -1,6 +1,6 @@
 (function(){
 	'use strict';
-	angular.module('escuela')
+	angular.module('app')
 		.service('animMsj',service);
 
 	function service(){

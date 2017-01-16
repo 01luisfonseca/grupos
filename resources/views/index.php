@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/ico" href="/favicon.ico">
 
-        <title>Escuela</title>
+        <title>Aplicación generica</title>
 
         <!-- Fonts -->
 
@@ -25,7 +25,7 @@
         <script src='/js/node_modules/jquery/dist/jquery.min.js'></script>
         <script src='/js/node_modules/bootstrap/dist/js/bootstrap.min.js'></script>
         <script src='/js/node_modules/ngstorage/ngStorage.min.js'></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+        <script src='/js/assets/tm/TweenMax.min.js'></script>
         
         
         <!-- Frontend -->
@@ -34,27 +34,29 @@
         <script src='/js/index.core.js'></script>
         <script src='/js/index.router.js'></script>
         <script src='/js/index.presentacion.js'></script>
+        <script src='/js/app.services/restfn.factory.js'></script>
         <script src='/js/app.services/oauth.value.js'></script>
         <script src='/js/app.services/auth.factory.js'></script>
         <script src='/js/app.services/animPages.service.js'></script>
         <script src='/js/app.services/animMsj.service.js'></script>
         <script src='/js/app.services/perfil.service.js'></script>
         <script src='/js/app.services/users.factory.js'></script>
-        <script src='/js/app.services/tipo.factory.js'></script>
-        <script src='/js/app.services/generales.factory.js'></script>
+        <script src='/js/app.services/tusers.factory.js'></script>
+        <script src='/js/app.services/options.factory.js'></script>
+        <script src='/js/app.services/eventlog.factory.js'></script>
 
         <!-- Modulos -->
         <script src='/js/layout/menu.directive.js'></script>
         <script src='/js/login/login.controller.js'></script>
         <script src='/js/authhome/authhome.controller.js'></script>
-        <script src='/js/usuarios/usuarios.controller.js'></script>
-        <script src='/js/usuarios/usuarioInfo.controller.js'></script>
-        <script src='/js/usuarios/usuario.directive.js'></script>
-        <script src='/js/usuarios/profile.controller.js'></script>
-        <script src='/js/generales/generales.controller.js'></script>
+        <script src='/js/users/users.controller.js'></script>
+        <script src='/js/users/userInfo.controller.js'></script>
+        <script src='/js/users/user.directive.js'></script>
+        <script src='/js/users/profile.controller.js'></script>
+        <script src='/js/options/options.controller.js'></script>
         
     </head>
-    <body ng-app="escuela">
+    <body ng-app="app">
         <div class="container-fluid">
             <div ui-view='menu'></div>
             <div class="row">

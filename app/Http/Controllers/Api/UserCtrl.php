@@ -14,11 +14,12 @@ class UserCtrl extends Controller
     /**
      * @var Request
      */
-    protected $req;
+    protected $req,$rel;
 
     public function __construct(Request $request)//Dependency injection
     {
         $this->req = $request;
+        $this->rel=['t_users'];
     }
 
     /**
@@ -28,22 +29,15 @@ class UserCtrl extends Controller
      */
     public function index($ini=0)
     {
-        $obj=User::where('id','>',2)->with('tipo_usuario')->orderBy('updated_at')->skip($ini)->take(50+$ini)->get();
+        $obj=User::with($this->rel)
+            ->orderBy('created_at','desc')
+            ->where('id','<>',1)
+            ->skip($ini)->take(50+$ini)->get();
         $ev=new EventlogRegister;
-        $msj='Consulta registros de usuarios.';
+        $msj='Consulta registros. Tabla=User.';
         $ev->registro(0,$msj,$this->req->user()->id);
         return $obj->toJson();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    }////
 
     /**
      * Store a newly created resource in storage.
@@ -54,38 +48,8 @@ class UserCtrl extends Controller
     public function store()
     {
         $ev=new EventlogRegister;
-        $ev->registro(1,'Intento de guardar usuario.',$this->req->user()->id);
-        $this->validate($this->req,[
-            'name'=>'required',
-            'lastname'=>'required',
-            'email'=>'required | unique:users',
-            'password'=>'required',
-            'identificacion'=>'required | unique:users',
-            'birday'=>'required',
-            'telefono'=>'required',
-            'direccion'=>'required',
-            'tipo_sangre'=>'required',
-            'tipo_usuario_id'=>'required',
-            'estado'=>'required'
-        ]);
-        $date=new Carbon($this->req->input('birday'));
-        $obj=new User;
-        $obj->name=$this->req->input('name');
-        $obj->lastname=$this->req->input('lastname');
-        $obj->email=$this->req->input('email');
-        $obj->identificacion=$this->req->input('identificacion');
-        $obj->birday=$date;
-        $obj->telefono=$this->req->input('telefono');
-        $obj->direccion=$this->req->input('direccion');
-        $obj->tipo_sangre=$this->req->input('tipo_sangre');
-        $obj->estado=$this->req->input('estado');
-        $obj->tarjeta=$this->req->input('tarjeta');
-        $obj->tipo_usuario_id=$this->req->input('tipo_usuario_id');
-        $obj->password=bcrypt($this->req->input('password'));
-        $obj->save();
-
-        //$obj=User::create($this->req->all());
-        $msj='Usuario creado con id '.$obj->id;
+        $ev->registro(1,'Intento de guardar en tabla=User.',$this->req->user()->id);
+        $msj=$this->setMod();
         $ev->registro(1,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
     }
@@ -96,24 +60,13 @@ class UserCtrl extends Controller
      * @param  int  $user
      * @return \Illuminate\Http\Response
      */
-    public function show($user)
+    public function show($id)
     {
-        $obj=User::with('tipo_usuario')->where('id','>',2)->findOrFail($user);
+        $obj=User::with($this->rel)->findOrFail($id);
         $ev=new EventlogRegister;
-        $msj='Consulta el usuario id='.$user;
+        $msj='Consulta de elemento. Tabla=User, id='.$id;
         $ev->registro(0,$msj,$this->req->user()->id);
         return $obj->toJson();
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($user)
-    {
-        //
     }
 
     /**
@@ -123,41 +76,11 @@ class UserCtrl extends Controller
      * @param  int  $user
      * @return \Illuminate\Http\Response
      */
-    public function update($user)
+    public function update($id)
     {
         $ev=new EventlogRegister;
-        $ev->registro(1,'Intento de actualizar usuario id='.$user,$this->req->user()->id);
-        $obj=User::findOrFail($user);
-        if($this->req->has('password')){
-            $obj->password=bcrypt($this->req->input('password'));
-        }else{
-            $this->validate($this->req,[
-                'name'=>'required',
-                'lastname'=>'required',
-                'email'=>'required',
-                'identificacion'=>'required',
-                'birday'=>'required',
-                'telefono'=>'required',
-                'direccion'=>'required',
-                'tipo_sangre'=>'required',
-                'tipo_usuario_id'=>'required',
-                'estado'=>'required'
-            ]);
-            $date=new Carbon($this->req->input('birday'));
-            $obj->birday=$date;
-            $obj->name=$this->req->input('name');
-            $obj->lastname=$this->req->input('lastname');
-            $obj->email=$this->req->input('email');
-            $obj->identificacion=$this->req->input('identificacion');
-            $obj->tarjeta=$this->req->input('tarjeta');
-            $obj->telefono=$this->req->input('telefono');
-            $obj->direccion=$this->req->input('direccion');
-            $obj->tipo_sangre=$this->req->input('tipo_sangre');
-            $obj->estado=$this->req->input('estado');
-            $obj->tipo_usuario_id=$this->req->input('tipo_usuario_id');
-            $obj->save();
-        }
-        $msj='Modifica la información del usuario id='.$user;
+        $ev->registro(1,'Intento de modificación. Tabla=User, id='.$id,$this->req->user()->id);
+        $msj= $this->setMod($id);
         $ev->registro(1,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
     }
@@ -168,25 +91,81 @@ class UserCtrl extends Controller
      * @param  int  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($user)
+    public function destroy($id)
     {
-        return response()->json($this->req->all());
         $ev=new EventlogRegister;
-        $ev->registro(2,'Intento de eliminar usuario. id='.$user,$this->req->user()->id);
-        if ($user==1) {
-            return response()->json(['msj'=>'No se puede eliminar al administrador']);
+        $ev->registro(2,'Intento de eliminación. Tabla=User, id='.$id,$this->req->user()->id);
+        $res=new Borrador;
+        if ($id==1) {
+            return response()->json(['msj'=>'No se puede modificar al superadministrador.']);
         }
-        $obj=User::findOrFail($user);
-        $obj->delete();
-        $msj='Se ha borrado el registro '.$obj->id;
+        $res->delUser($id); // Usando el borrador de cascada.
+        $msj='Borrado. Tabla=User, id='.$id;
         $ev->registro(2,$msj,$this->req->user()->id);
         return response()->json(['msj'=>$msj]);
+    }
+    
+    /**
+     * Guarda o modifica los registros
+     *
+     * @return \Illuminate\Http\Response
+     */
+    private function setMod($id=0){
+        $resultado='Operación rechazada por falta de información';
+        $obj=new User;   // Si es nuevo registro
+        if($id>0){
+            $obj=User::findOrFail($id); // Si es modificacion
+        }   
+
+        //////////////////////////////////////////////////////
+        // Condiciones que se repiten sea modificación o nuevo
+        // Este es el lugar que se debe modificar.
+        if ($id==1) {
+            return response()->json(['msj'=>'No se puede modificar al superadministrador.']);
+        }
+        if ($id) {
+            $this->validate($this->req,[
+                'name'=>'required',
+                'email'=>'required',
+                'status'=>'required',
+                't_users_id'=>'required'
+            ]);
+        }else{
+            $this->validate($this->req,[
+                'name'=>'required',
+                'email'=>'required',
+                'password'=>'required',
+                't_users_id'=>'required'
+            ]);
+
+        }
+        $obj->name=$this->req->input('name');
+        $obj->email=$this->req->input('email');
+        $obj->t_users_id=$this->req->input('t_users_id');
+        $obj->status=($this->req->has('status'))? $this->req->input('status') : 1;
+        if ($this->req->has('password')) {
+            $obj->password=bcrypt($this->req->input('password'));
+        }
+        //$obj->cancelado_at=new Carbon($this->req->input('cancelado_at'));
+        $obj->save();
+
+        // De aqui para abajo no se toca nada
+        ////////////////////////////////////
+
+
+        // Guardar y finalizar
+        if ($id>0) {
+            $resultado='Modificación. Tabla=User, id='.$id;
+        }else{
+            $resultado='Elemento Creado. Tabla=User, id='.$obj->id;
+        }
+        return $resultado;
     }
 
     /////////////////////////////////////////////
     /////////// FUNCIONES ADICIONALES ///////////
     /////////////////////////////////////////////
-   
+
     /**
      * Muestra numero de registros
      *
@@ -198,38 +177,18 @@ class UserCtrl extends Controller
     }
 
     /**
-     * Busca los objetos que coincidan.
+     * Busca Options con los periodos ID. Corelaciona a los alumnos con su nota.
      *
-     * @param  int  $info
      * @return \Illuminate\Http\Response
      */
-    public function search($info) // Falta esto
-    {
-        $obj=User::with('tipo_usuario')
-            ->select(
-                'users.id',
-                'users.name',
-                'users.lastname',
-                'users.identificacion',
-                'users.updated_at',
-                'users.estado',
-                'users.telefono',
-                'users.email',
-                'users.tarjeta',
-                'tipo_usuario.nombre as tnombre'
-                )
-            ->join('tipo_usuario','tipo_usuario_id','=','tipo_usuario.id')
-            ->where('users.id','!=','1') // El administrador nunca aparece
-            ->where('identificacion','LIKE','%'.$info.'%')
-            ->orWhere('name','LIKE','%'.$info.'%')
-            ->orWhere('lastname','LIKE','%'.$info.'%')
+    public function search($info){
+        $obj=User::where('id','<>',1)
+            ->where('name','LIKE','%'.$info.'%')
             ->orWhere('email','LIKE','%'.$info.'%')
-            ->orWhere('telefono','LIKE','%'.$info.'%')
-            ->orWhere('tipo_usuario.nombre','LIKE','%'.$info.'%')
-            ->orWhere('tarjeta','LIKE','%'.$info.'%')
-            ->orderBy('lastname','desc')
+            ->orderBy('updated_at','desc')
+            ->with($this->rel)
             ->get();
-        $msj='Se han buscado los registros con letras: '.$info;
+        $msj='Busqueda. Tabla=User, letras='.$info;
         $ev=new EventlogRegister;
         $ev->registro(0,$msj,$this->req->user()->id);
         return $obj->toJson();
@@ -247,10 +206,10 @@ class UserCtrl extends Controller
         }
         $ev=new EventlogRegister;
         if ($user==1) {
-            return response()->json(['msj'=>'No se puede deshabilitar al administrador']);
+            return response()->json(['msj'=>'No se puede deshabilitar al superadministrador']);
         }
         $obj=User::findOrFail($user);
-        $obj->estado=$status;
+        $obj->status=$status;
         $obj->save();
         $msj='Se ha cambiado el status del usuario id= '.$user.' a estado= '.$status;
         $ev->registro(2,$msj,$this->req->user()->id);

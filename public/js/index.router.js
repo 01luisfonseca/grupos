@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	angular
-		.module('escuela.router',[
+		.module('app.router',[
 			])
 		.config(config);
 

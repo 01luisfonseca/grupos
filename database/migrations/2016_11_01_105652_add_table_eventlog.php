@@ -16,8 +16,8 @@ class AddTableEventlog extends Migration
         Schema::create('eventlog', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('users_id');
-            $table->integer('nivel');
-            $table->mediumText('descripcion');
+            $table->integer('level');
+            $table->mediumText('desc');
             $table->timestamps();
         });
     }

@@ -1,4 +1,4 @@
 (function(){
 	'use strict';
-	angular.module('escuela.presentacion',[]);
+	angular.module('app.presentacion',[]);
 })();

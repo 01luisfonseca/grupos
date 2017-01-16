@@ -1,6 +1,6 @@
 (function(){
 	'use strict';
-	angular.module('escuela')
+	angular.module('app')
 		.service('perfil',service);
 
 	function service($http,$interval,AuthenticationFactory, $localStorage){
@@ -14,6 +14,7 @@
 		vm.buscarInfo=buscarInfo;
 		vm.getInfo=getInfo;
 		vm.esAdmin=esAdmin;
+		vm.esSAdmin=esSAdmin;
 		vm.getId=getId;
 		vm.setInfo=setInfo;
 
@@ -26,7 +27,7 @@
 			if( typeof($localStorage.currentUser)=='object'){
 			$http.get(vm.url).then(function(res){
 				vm.info=res;
-				if(res.data.estado==0){ // Cierra la sesión automáticamente si el estado es 0
+				if(res.data.status==0){ // Cierra la sesión automáticamente si el estado es 0
 					console.log('Sesión cerrada automáticamente.');
 					AuthenticationFactory.Logout();
 				}
@@ -43,7 +44,16 @@
 
 		function esAdmin(){
 			if (typeof(vm.info)!='undefined') {
-			if(vm.info.data.tipo_usuario_id==6){
+			if(vm.info.data.t_users_id==2 || vm.info.data.t_users_id==3){
+				return true;
+			}
+			}
+			return false;
+		}
+
+		function esSAdmin(){
+			if (typeof(vm.info)!='undefined') {
+			if(vm.info.data.t_users_id==2){
 				return true;
 			}
 			}

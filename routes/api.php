@@ -18,17 +18,31 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
     	return $request->user(); // Info del usuario logueado
 	});
 	
-	/** RUTAS GENERALES TABLE **/
-	Route::group(['prefix'=>'generales','middleware'=>'admin'],function(){
+	/** RUTAS EVENTLOG TABLE **/
+	Route::group(['prefix'=>'eventlog'],function(){
 		//Basicos
-		Route::get('/','GenCtrl@index');
-		Route::post('/','GenCtrl@store');
-		Route::get('/{id}','GenCtrl@show');
-		Route::put('/{id}','GenCtrl@update');
-		Route::delete('/{id}','GenCtrl@destroy');
+		Route::get('/','EventlogCtrl@index')->middleware('admin');
+		Route::post('/','EventlogCtrl@store')->middleware('admin');
+		Route::get('/{id}','EventlogCtrl@show')->middleware('admin');
+		Route::put('/{id}','EventlogCtrl@update')->middleware('admin');
+		Route::delete('/{id}','EventlogCtrl@destroy')->middleware('admin');
 		//Adicionales
-		Route::get('/search/{info}','UserCtrl@search');
-		Route::get('/range/{ini}','UserCtrl@index');
+		Route::get('/search/{info}','EventlogCtrl@search')->middleware('admin');
+		Route::get('/range/{ini}','EventlogCtrl@index')->middleware('admin');
+		Route::get('/registro/usuario','EventlogCtrl@registro');
+	});
+
+	/** RUTAS OPTIONS TABLE **/
+	Route::group(['prefix'=>'options','middleware'=>'admin'],function(){
+		//Basicos
+		Route::get('/','OptCtrl@index');
+		Route::post('/','OptCtrl@store');
+		Route::get('/{id}','OptCtrl@show');
+		Route::put('/{id}','OptCtrl@update');
+		Route::delete('/{id}','OptCtrl@destroy');
+		//Adicionales
+		Route::get('/search/{info}','OptCtrl@search');
+		Route::get('/range/{ini}','OptCtrl@index');
 	});
 
 	/** RUTAS USERS TABLE **/
@@ -40,6 +54,7 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
 		Route::put('/{user}','UserCtrl@update');
 		Route::delete('/{user}','UserCtrl@destroy');
 		//Adicionales
+		Route::get('/count/elems','UserCtrl@count');
 		Route::get('/search/{info}','UserCtrl@search');
 		Route::get('/range/{ini}','UserCtrl@index');
 		Route::put('/status/{user}/{status}','UserCtrl@modEstado');
@@ -54,11 +69,11 @@ Route::group(['middleware' => ['auth:api','permited'],'namespace'=>'Api'], funct
 	});
 
 	/** RUTAS TIPO_USUARIO TABLE **/
-	Route::group(['prefix'=>'tipo','middleware'=>'admin'],function(){
-		Route::post('/','TipoCtrl@store');
-		Route::put('/{id}','TipoCtrl@update');
-		Route::delete('/{id}','TipoCtrl@destroy');
-		Route::get('/','TipoCtrl@index');
-		Route::get('/{id}','TipoCtrl@show');
+	Route::group(['prefix'=>'tuser','middleware'=>'admin'],function(){
+		Route::post('/','TUserCtrl@store');
+		Route::put('/{id}','TUserCtrl@update');
+		Route::delete('/{id}','TUserCtrl@destroy');
+		Route::get('/','TUserCtrl@index');
+		Route::get('/{id}','TUserCtrl@show');
 	});
 });

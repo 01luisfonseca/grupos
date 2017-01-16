@@ -1,0 +1,36 @@
+  <div id="content">
+    <div id="error" ng-show='vm.error.existe' class="alert alert-warning" role="alert"><p>{{vm.error.msj}}</p></div>
+    <div id="alerta" ng-show='vm.alerta.existe' class="alert alert-danger" role="alert"><p>{{vm.alerta.msj}}</p></div>
+    <p ng-if='vm.esElMismo()'>La información que se presenta a continuación es solo para información. En caso de requerir modificación en la información debe solicitarla al administrador en la institución.</p>
+    <p ng-if='vm.esElMismo()'><strong>NOTA:</strong> Solo se permite la modificación de la contraseña</p>
+    <form class="form" name='formUser' ng-submit='formUser.$valid && vm.validaPass() && vm.gestionUser()' novalidate>
+      <div class="form-group">
+        <label class="control-label" for="name">Nombre</label>  
+        <input id="name" name="name" type="text" placeholder="Digite nombres" class="form-control input-md" required ng-model='vm.user.name'>
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="status">Habilitado (1) o inhabilitado (0)</label>  
+        <input id="status" name="status" type="number" min="0" max="1" class="form-control input-md" ng-model='vm.user.status' required>    
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="email">Correo electrónico</label>  
+        <input id="email" name="email" type="email" placeholder="correo@dominio.com" class="form-control input-md" ng-model='vm.user.email' required>    
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="tipo_usuario">Tipo de permiso de acceso</label>
+        <select id="tipo_usuario" name="tipo_usuario" class="form-control" ng-model='vm.user.t_users_id' >
+          <option ng-if='!vm.nuevo' value="{{vm.user.t_users.id}}" selected>{{vm.user.t_users.name}}</option>
+          <option ng-if='vm.esAdmin() && !vm.esElMismo()' ng-repeat='tipo in vm.tipo_usuario.data' value="{{tipo.id}}">{{tipo.name}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+      <label class="control-label" for="tarjeta">Contraseña</label>  
+      <input id="tarjeta" name="tarjeta" type="password" placeholder="Ingrese contraseña" class="form-control input-md" ng-model='vm.user.password' ng-blur='vm.validaPass()' >
+      </div>
+      <div class="form-group">
+      <label class="control-label" for="tarjeta">Verificar contraseña</label>  
+      <input id="tarjeta" name="tarjeta" type="password" placeholder="Vuelva a colocar contraseña" class="form-control input-md" ng-model='vm.user.repassword' ng-blur='vm.validaPass()'>
+      </div>
+      <input type="submit" class="btn btn-primary" value="Guardar">
+    </form>
+  </div> 
