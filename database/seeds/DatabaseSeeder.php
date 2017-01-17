@@ -47,6 +47,12 @@ class DatabaseSeeder extends Seeder
             'password_client'=>100,
             'revoked'=>0
         ]);
+        DB::table('estado')->insert([
+            'name'=>'No en Casa',
+        ]);
+        DB::table('estado')->insert([
+            'name'=>'Atendió',
+        ]);
 
         Model::reguard();
     }

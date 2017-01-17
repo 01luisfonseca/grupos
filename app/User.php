@@ -42,4 +42,12 @@ class User extends Authenticatable
     public function eventlog(){
         return $this->hasMany('App\Eventlog');
     }
+
+    public function grupo(){
+        return $this->hasMany('App\Grupo');
+    }
+
+    public function territorio_has_users(){
+        return $this->hasMany('App\TerritorioHasUsers');
+    }
 }
